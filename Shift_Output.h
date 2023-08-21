@@ -60,7 +60,7 @@ class Shift_Output{
             pushOutputArray();
         }
 
-        void writeShiftRegister(uint8_t shiftRegisterIndex, uint8_t outputValue){
+        void writeRegister(uint8_t shiftRegisterIndex, uint8_t outputValue){
             if(shiftRegisterIndex >= numShiftRegisters){
                 writeAllLow();
                 if(!debug) return;
