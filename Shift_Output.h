@@ -86,7 +86,7 @@ class Shift_Output{
         void pushOutputArray(){
             ::digitalWrite(latchPin, LOW);
             for(int i = 0; i < numShiftRegisters; i++){
-                shiftOut(dataPin, clockPin, LSBFIRST, outputArray[i]);
+                shiftOut(dataPin, clockPin, MSBFIRST, outputArray[i]);
             }
             ::digitalWrite(latchPin, HIGH);
             timer = millis();
