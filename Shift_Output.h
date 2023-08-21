@@ -30,28 +30,28 @@ class Shift_Output{
             pinMode(latchPin, OUTPUT);
             pinMode(clockPin, OUTPUT);
             pinMode(dataPin, OUTPUT);
-            digitalWriteAllLow();
+            writeAllLow();
         }
 
-        void digitalWrite(uint16_t index, bool state){
+        void write(uint16_t index, bool state){
             if(index >= numOutputs){
-                digitalWriteAllLow();
+                writeAllLow();
                 if(!debug) return;
                 Serial.print(index);
                 Serial.println(" exceeds number of outputs");
             }
-            digitalWrite(index / 8, index % 8);
+            write(index / 8, index % 8);
         }
 
-        void digitalWrite(uint16_t shiftRegisterIndex, uint8_t pinIndex, bool state){
+        void write(uint16_t shiftRegisterIndex, uint8_t pinIndex, bool state){
             if(shiftRegisterIndex >= numShiftRegisters){
-                digitalWriteAllLow();
+                writeAllLow();
                 if(!debug) return;
                 Serial.print(shiftRegisterIndex);
                 Serial.println(" exceeds the number of shift registers");
             }
             if(pinIndex > 7){
-                digitalWriteAllLow();
+                writeAllLow();
                 if(!debug) return;
                 Serial.print("Pin index of an individual shift register cannot exceed 7. You passed ");
                 Serial.println(pinIndex);
@@ -60,9 +60,9 @@ class Shift_Output{
             pushOutputArray();
         }
 
-        void digitalWriteShiftRegister(uint8_t shiftRegisterIndex, uint8_t outputValue){
+        void writeShiftRegister(uint8_t shiftRegisterIndex, uint8_t outputValue){
             if(shiftRegisterIndex >= numShiftRegisters){
-                digitalWriteAllLow();
+                writeAllLow();
                 if(!debug) return;
                 Serial.print(shiftRegisterIndex);
                 Serial.println(" exceeds the number of shift registers");
@@ -71,7 +71,7 @@ class Shift_Output{
             pushOutputArray();
         }
 
-        void digitalWriteAllLow(){
+        void writeAllLow(){
             for(int i = 0; i < numShiftRegisters; i++){
                 outputArray[i] = 0;
             }
@@ -84,9 +84,11 @@ class Shift_Output{
         }
 
         void pushOutputArray(){
+            ::digitalWrite(latchPin, LOW);
             for(int i = 0; i < numShiftRegisters; i++){
                 shiftOut(dataPin, clockPin, LSBFIRST, outputArray[i]);
             }
+            ::digitalWrite(latchPin, HIGH);
             timer = millis();
         }
 
