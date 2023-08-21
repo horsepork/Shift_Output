@@ -18,15 +18,15 @@ void setup(){
 
 void loop(){
 
-    shiftOutput.digitalWrite(21, HIGH); // writes the 6th pin of the 3rd shift register high
+    shiftOutput.write(21, HIGH); // writes the 6th pin of the 3rd shift register high
 
-    shiftOutput.digitalWrite(3, 6, HIGH); // does the same as the above
+    shiftOutput.write(3, 6, HIGH); // does the same as the above
 
-    shiftOutput.digitalWriteShiftRegister(0, 0b00001011); // writes the output state for the entire shift register
+    shiftOutput.writeRegister(0, 0b00001011); // writes the output state for the entire shift register
                                                        // would turn pins 1, 2, and 4 high, everything else low
                                                        // 0b00001011 is equivalent to decimal 11, but is in binary for easier comprehension
 
-    shiftOutput.digitalWriteAllLow(); // does what it sounds like
+    shiftOutput.writeAllLow(); // does what it sounds like
 
     shiftOutput.update(); // leave in main loop. Isn't strictly necessary, but adds some
                        // "safety" in case there is an errant shift out.
