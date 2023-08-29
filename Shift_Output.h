@@ -1,3 +1,6 @@
+#ifndef SHIFT_OUTPUT_H
+#define SHIFT_OUTPUT_H
+
 #include "Arduino.h"
 
 class Shift_Output{
@@ -105,3 +108,5 @@ class Shift_Output{
             return val;
         }
 };
+
+#endif
