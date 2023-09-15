@@ -43,7 +43,7 @@ class Shift_Output{
                 Serial.print(index);
                 Serial.println(" exceeds number of outputs");
             }
-            write(index / 8, index % 8);
+            write(index / 8, index % 8, state);
         }
 
         void write(uint16_t shiftRegisterIndex, uint8_t pinIndex, bool state){
