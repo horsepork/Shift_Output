@@ -59,7 +59,7 @@ class Shift_Output{
                 Serial.print("Pin index of an individual shift register cannot exceed 7. You passed ");
                 Serial.println(pinIndex);
             }
-            outputArray[shiftRegisterIndex] |= power(2, pinIndex);
+            bitWrite(outputArray[shiftRegisterIndex], pinIndex, state);
             pushOutputArray();
         }
 
