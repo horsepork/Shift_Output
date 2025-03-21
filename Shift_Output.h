@@ -22,7 +22,7 @@ class Shift_Output{
         uint8_t latchPin;
         uint8_t clockPin;
         uint8_t dataPin;
-        uint8_t enablePin;
+        int enablePin;
         uint8_t numShiftRegisters;
         uint16_t numOutputs;
         uint8_t *outputArray;
