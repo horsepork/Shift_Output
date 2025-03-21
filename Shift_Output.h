@@ -5,11 +5,12 @@
 
 class Shift_Output{
     public:
-        Shift_Output(uint8_t _latchPin, uint8_t _clockPin, uint8_t _dataPin, uint16_t _numOutputs){
+        Shift_Output(uint8_t _latchPin, uint8_t _clockPin, uint8_t _dataPin, uint16_t _numOutputs, int _enablePin = -1){
             latchPin = _latchPin;
             clockPin = _clockPin;
             dataPin = _dataPin;
             numOutputs = _numOutputs;
+            enablePin = _enablePin;
             numShiftRegisters = ceil(numOutputs / 8.0);
             outputArray = new uint8_t[numShiftRegisters];
             for(int i = 0; i < numShiftRegisters; i++){
@@ -21,6 +22,7 @@ class Shift_Output{
         uint8_t latchPin;
         uint8_t clockPin;
         uint8_t dataPin;
+        uint8_t enablePin;
         uint8_t numShiftRegisters;
         uint16_t numOutputs;
         uint8_t *outputArray;
@@ -33,6 +35,7 @@ class Shift_Output{
             pinMode(latchPin, OUTPUT);
             pinMode(clockPin, OUTPUT);
             pinMode(dataPin, OUTPUT);
+            enable();
             writeAllLow();
         }
 
@@ -97,6 +100,17 @@ class Shift_Output{
 
         void changeUpdateTime(uint16_t t){
             updateTime = t;
+        }
+
+        void enable(){
+            if(enablePin == -1) return;
+            pinMode(enablePin, OUTPUT);
+            digitalWrite(enablePin, LOW);
+        }
+
+        void disable(){
+            if(enablePin == -1) return;
+            digitalWrite(enablePin, HIGH);
         }
     
     private:
